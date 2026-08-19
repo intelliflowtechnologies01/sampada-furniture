@@ -176,7 +176,7 @@
     </div>
   </section>
 
-  <!-- ============ 5. SHOP BY CATEGORIES ============ -->
+  <!-- ============ 5. SHOP BY CATEGORIES — MAGAZINE COLLAGE ============ -->
   <section class="categories-section">
     <div class="container">
       <div class="row g-5 align-items-start">
@@ -187,53 +187,83 @@
             From the sofa where Sunday mornings happen to the table that hosts
             every festival — find the piece your room has been waiting for.
           </p>
-          <a href="products.html" class="btn-luxe btn-outline-ink mt-3 reveal reveal-d3">
-            View All Furniture
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-          </a>
+          <ul class="cat-index reveal reveal-d3">
+            <li><a href="products.html?cat=sofas"><span class="ci-num">01</span><span class="ci-name">Sofas &amp; Seating</span><span class="ci-count">24 pieces</span></a></li>
+            <li><a href="products.html?cat=beds"><span class="ci-num">02</span><span class="ci-name">Beds &amp; Bedroom</span><span class="ci-count">18 pieces</span></a></li>
+            <li><a href="products.html?cat=dining"><span class="ci-num">03</span><span class="ci-name">Dining</span><span class="ci-count">16 pieces</span></a></li>
+            <li><a href="products.html?cat=tables"><span class="ci-num">04</span><span class="ci-name">Tables &amp; Desks</span><span class="ci-count">21 pieces</span></a></li>
+            <li><a href="products.html?cat=storage"><span class="ci-num">05</span><span class="ci-name">Storage</span><span class="ci-count">14 pieces</span></a></li>
+            <li><a href="products.html?cat=lighting"><span class="ci-num">06</span><span class="ci-name">Lighting</span><span class="ci-count">12 pieces</span></a></li>
+          </ul>
         </div>
         <div class="col-lg-9">
-          <div class="category-mosaic reveal reveal-d2">
-            <a href="products.html?cat=sofas" class="cat-tile t-a">
+          <div class="cat-collage reveal reveal-d2">
+            <div class="cat-frame" aria-hidden="true"></div>
+            <div class="cat-dots" aria-hidden="true"></div>
+            <div class="cat-badge" aria-hidden="true">
+              <svg viewBox="0 0 100 100" width="104" height="104">
+                <defs><path id="catCircle" d="M 50,50 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0"/></defs>
+                <text style="font-size:8.6px;letter-spacing:2.4px;fill:var(--brass-deep);font-weight:700;">
+                  <textPath href="#catCircle">SIX ROOMS · ONE HOME · SIX ROOMS · ONE HOME ·</textPath>
+                </text>
+              </svg>
+              <div class="badge-core">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>
+              </div>
+            </div>
+
+            <div class="cat-tag" aria-hidden="true">
+              <span class="ct-line"></span>
+              <span class="ct-est">Est. 1974</span>
+              <span class="ct-num">Six Rooms</span>
+            </div>
+
+            <a href="products.html?cat=sofas" class="cat-piece cp-sofas">
               <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=1200&auto=format&fit=crop" alt="Sofas and seating" />
-              <div class="cat-label">
+              <span class="cp-idx">01</span>
+              <div class="cp-label">
                 <div><span>24 Pieces</span><h3>Sofas &amp; Seating</h3></div>
-                <div class="cat-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
+                <div class="cp-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
               </div>
             </a>
-            <a href="products.html?cat=beds" class="cat-tile t-b">
+            <a href="products.html?cat=beds" class="cat-piece cp-beds">
               <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=900&auto=format&fit=crop" alt="Beds and bedroom" />
-              <div class="cat-label">
+              <span class="cp-idx">02</span>
+              <div class="cp-label">
                 <div><span>18 Pieces</span><h3>Beds &amp; Bedroom</h3></div>
-                <div class="cat-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
+                <div class="cp-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
               </div>
             </a>
-            <a href="products.html?cat=dining" class="cat-tile t-c">
-              <img src="https://images.unsplash.com/photo-1581428982868-e410dd047a90?q=80&w=700&auto=format&fit=crop" alt="Dining" />
-              <div class="cat-label">
+            <a href="products.html?cat=dining" class="cat-piece cp-dining">
+              <img src="https://images.unsplash.com/photo-1617806118233-18e1de247200?q=80&w=800&auto=format&fit=crop" alt="Dining" />
+              <span class="cp-idx">03</span>
+              <div class="cp-label">
                 <div><span>16 Pieces</span><h3>Dining</h3></div>
-                <div class="cat-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
+                <div class="cp-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
               </div>
             </a>
-            <a href="products.html?cat=tables" class="cat-tile t-d">
-              <img src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?q=80&w=700&auto=format&fit=crop" alt="Tables and desks" />
-              <div class="cat-label">
-                <div><span>21 Pieces</span><h3>Tables &amp; Desks</h3></div>
-                <div class="cat-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
+            <a href="products.html?cat=tables" class="cat-piece cp-tables">
+              <img src="https://images.unsplash.com/photo-1581428982868-e410dd047a90?q=80&w=700&auto=format&fit=crop" alt="Tables and desks" />
+              <span class="cp-idx">04</span>
+              <div class="cp-label">
+                <div><span>21 Pieces</span><h3>Tables</h3></div>
+                <div class="cp-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
               </div>
             </a>
-            <a href="products.html?cat=storage" class="cat-tile t-e">
-              <img src="https://images.unsplash.com/photo-1617806118233-18e1de247200?q=80&w=700&auto=format&fit=crop" alt="Storage" />
-              <div class="cat-label">
+            <a href="products.html?cat=storage" class="cat-piece cp-storage">
+              <img src="https://images.unsplash.com/photo-1594620302200-9a762244a156?q=80&w=800&auto=format&fit=crop" alt="Storage" />
+              <span class="cp-idx">05</span>
+              <div class="cp-label">
                 <div><span>14 Pieces</span><h3>Storage</h3></div>
-                <div class="cat-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
+                <div class="cp-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
               </div>
             </a>
-            <a href="products.html?cat=lighting" class="cat-tile t-f">
-              <img src="https://images.unsplash.com/photo-1571508601891-ca5e7a713859?q=80&w=900&auto=format&fit=crop" alt="Lighting" />
-              <div class="cat-label">
+            <a href="products.html?cat=lighting" class="cat-piece cp-lighting">
+              <img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?q=80&w=800&auto=format&fit=crop" alt="Lighting" />
+              <span class="cp-idx">06</span>
+              <div class="cp-label">
                 <div><span>12 Pieces</span><h3>Lighting</h3></div>
-                <div class="cat-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
+                <div class="cp-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
               </div>
             </a>
           </div>

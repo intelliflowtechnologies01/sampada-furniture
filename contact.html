@@ -227,13 +227,33 @@
     </div>
   </section>
 
-  <!-- ============ MAP ============ -->
+  <!-- ============ FIND US — DESIGNED MAP PANEL ============ -->
   <section class="container reveal">
-    <div style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md);border:1px solid var(--line-soft);">
-      <iframe title="Sampada Furniture showroom — Koregaon Park, Pune"
-              src="https://www.google.com/maps?q=Koregaon+Park,+Pune&output=embed"
-              style="width:100%;height:380px;border:0;display:block;"
-              loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <div style="position:relative;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md);border:1px solid var(--line-soft);background:var(--sand);min-height:340px;">
+      <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.5;" aria-hidden="true">
+        <defs>
+          <pattern id="mapgrid" width="56" height="56" patternUnits="userSpaceOnUse">
+            <path d="M56 0H0v56" fill="none" stroke="rgba(122,92,62,.25)" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#mapgrid)"/>
+        <path d="M-20 250 C 200 180, 380 320, 640 240 S 1100 120, 1480 220" fill="none" stroke="rgba(122,92,62,.4)" stroke-width="10" stroke-linecap="round"/>
+        <path d="M-20 120 C 260 200, 520 60, 860 160 S 1300 300, 1500 180" fill="none" stroke="rgba(122,92,62,.22)" stroke-width="6" stroke-linecap="round"/>
+        <path d="M420 -20 C 380 140, 520 260, 460 400" fill="none" stroke="rgba(122,92,62,.22)" stroke-width="6" stroke-linecap="round"/>
+        <path d="M980 -20 C 1020 160, 900 260, 960 400" fill="none" stroke="rgba(122,92,62,.3)" stroke-width="8" stroke-linecap="round"/>
+      </svg>
+      <div class="d-flex flex-column align-items-center justify-content-center text-center" style="position:relative;min-height:340px;padding:2.5rem 1.5rem;">
+        <div style="width:64px;height:64px;border-radius:50% 50% 50% 4px;background:var(--ink);display:grid;place-items:center;transform:rotate(-45deg);box-shadow:var(--shadow-brass);margin-bottom:1.4rem;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--brass-soft)" stroke-width="1.8" style="transform:rotate(45deg);"><circle cx="12" cy="12" r="3.5"/></svg>
+        </div>
+        <h3 style="font-size:1.5rem;" class="mb-1">Sampada Flagship Showroom</h3>
+        <p class="mb-1" style="font-weight:600;">42 Orchard Avenue, Koregaon Park, Pune 411001</p>
+        <p class="mb-4" style="font-size:.85rem;">Landmark: 2 min from Osho Garden gate · Free valet parking</p>
+        <a href="https://www.google.com/maps?q=Koregaon+Park,+Pune" target="_blank" rel="noopener" class="btn-luxe btn-ink">
+          Get Directions
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 19-9-9 19-2-8-8-2Z"/></svg>
+        </a>
+      </div>
     </div>
   </section>
 
