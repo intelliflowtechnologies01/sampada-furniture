@@ -84,6 +84,20 @@ document.addEventListener("alpine:init", () => {
       this._toastT = setTimeout(() => (this.toast = null), 2600);
     }
   });
+
+  // Lock body scroll while any overlay is open
+  Alpine.effect(() => {
+    const s = Alpine.store("shop");
+    document.body.style.overflow =
+      s.cartOpen || s.wishlistOpen || s.mobileMenu ? "hidden" : "";
+  });
+
+  // Escape closes any open overlay
+  document.addEventListener("keydown", e => {
+    if (e.key !== "Escape") return;
+    const s = Alpine.store("shop");
+    s.cartOpen = s.wishlistOpen = s.mobileMenu = false;
+  });
 });
 
 /* ---------- Shared behaviours ---------- */
@@ -107,14 +121,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }, { threshold: 0.12 });
   document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 
-  // Reel slider controls
+  // Reel slider controls (buttons may live in the section header, outside the track wrap)
   document.querySelectorAll("[data-reel-track]").forEach(track => {
-    const wrap = track.closest(".reel-track-wrap");
-    if (!wrap) return;
+    const scope = track.closest("section") || track.parentElement;
+    if (!scope) return;
     const step = () => Math.min(track.clientWidth * 0.8, 520);
-    wrap.querySelectorAll("[data-reel-prev]").forEach(b =>
+    scope.querySelectorAll("[data-reel-prev]").forEach(b =>
       b.addEventListener("click", () => track.scrollBy({ left: -step(), behavior: "smooth" })));
-    wrap.querySelectorAll("[data-reel-next]").forEach(b =>
+    scope.querySelectorAll("[data-reel-next]").forEach(b =>
       b.addEventListener("click", () => track.scrollBy({ left: step(), behavior: "smooth" })));
   });
 
