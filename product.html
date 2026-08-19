@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shop All Furniture — Sampada Furniture</title>
-  <meta name="description" content="Browse the full Sampada collection — handcrafted sofas, beds, dining sets, tables, storage and lighting in solid wood." />
+  <title>Product — Sampada Furniture</title>
+  <meta name="description" content="Handcrafted solid-wood furniture from the Sampada workshop — built to be inherited, backed by a lifetime frame warranty." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -34,7 +34,7 @@
 
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
-        <li><a href="products.html" class="active">Products</a></li>
+        <li><a href="products.html">Products</a></li>
         <li><a href="about.html">About Us</a></li>
         <li><a href="blog.html">Journal</a></li>
         <li><a href="contact.html">Contact</a></li>
@@ -96,70 +96,182 @@
     </div>
   </div>
 
-  <!-- ============ PAGE HERO ============ -->
-  <section class="page-hero">
-    <div class="container">
-      <nav class="breadcrumb-luxe reveal" aria-label="Breadcrumb">
-        <a href="index.html">Home</a>
-        <span class="crumb-sep">✦</span>
-        <span>Products</span>
-      </nav>
-      <span class="eyebrow reveal reveal-d1">The Collection</span>
-      <h1 class="display-hero reveal reveal-d2">Furniture for<br />every <em>room</em></h1>
-      <p class="lead reveal reveal-d3" style="max-width:520px;color:rgba(34,26,18,.72);">
-        Solid teak, walnut and oak — cut, joined and finished by hand in our Pune
-        workshop. Filter by room, search by name, find your forever piece.
-      </p>
-    </div>
-  </section>
-
-  <!-- ============ CATALOG ============ -->
-  <section class="pb-5" x-data="{
-      cat: 'all',
-      q: '',
-      sort: 'featured',
+  <!-- ============ PDP ============ -->
+  <section class="py-5" x-data="{
+      id: Number(new URLSearchParams(location.search).get('id')) || 1,
+      get d() { return SF_DATA.getProductDetails(this.id) || SF_DATA.getProductDetails(1); },
+      activeImg: 0,
+      qty: 1,
+      tab: 'desc',
       init() {
-        const c = new URLSearchParams(location.search).get('cat');
-        if (c && SF_DATA.categories.some(x => x.slug === c)) this.cat = c;
-      },
-      get items() {
-        let list = SF_DATA.products.filter(p =>
-          (this.cat === 'all' || p.cat === this.cat) &&
-          (!this.q || p.name.toLowerCase().includes(this.q.toLowerCase()))
-        );
-        if (this.sort === 'price-asc')  list = [...list].sort((a, b) => a.price - b.price);
-        if (this.sort === 'price-desc') list = [...list].sort((a, b) => b.price - a.price);
-        if (this.sort === 'rating')     list = [...list].sort((a, b) => b.rating - a.rating);
-        return list;
+        if (!SF_DATA.getProductDetails(this.id)) this.id = 1;
+        document.title = (this.d.product.name || 'Product') + ' — Sampada Furniture';
       }
     }">
     <div class="container">
-      <div class="filter-bar mb-2 reveal">
-        <button class="filter-chip" :class="cat === 'all' ? 'active' : ''" @click="cat = 'all'">All</button>
-        <template x-for="c in SF_DATA.categories" :key="c.slug">
-          <button class="filter-chip" :class="cat === c.slug ? 'active' : ''" @click="cat = c.slug" x-text="c.name"></button>
-        </template>
-        <div class="d-flex flex-wrap gap-2 align-items-center ms-lg-auto">
-          <div class="search-pill">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-            <input type="search" placeholder="Search pieces…" x-model.debounce.250ms="q" aria-label="Search products" />
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb-luxe reveal" aria-label="Breadcrumb" style="margin-bottom:1.5rem;">
+        <a href="index.html">Home</a>
+        <span class="crumb-sep">✦</span>
+        <a :href="'products.html?cat=' + d.product.cat" x-text="SF.catName(d.product.cat)"></a>
+        <span class="crumb-sep">✦</span>
+        <span x-text="d.product.name"></span>
+      </nav>
+
+      <div class="row g-4 g-lg-5">
+        <!-- Gallery -->
+        <div class="col-lg-6">
+          <div class="pdp-gallery reveal">
+            <div class="pdp-main-img">
+              <span class="pdp-badge" x-show="d.product.tag === 'sale' || d.product.tag === 'bestseller' || d.product.isNew">
+                <span class="product-tag" :class="d.product.tag === 'sale' ? 'tag-sale' : (d.product.isNew ? 'tag-new' : '')"
+                      x-text="d.product.tag === 'sale' ? 'Sale' : (d.product.isNew ? 'New' : 'Bestseller')"></span>
+              </span>
+              <img :src="d.gallery[activeImg]" :alt="d.product.name" />
+            </div>
+            <div class="pdp-thumbs">
+              <template x-for="(src, i) in d.gallery" :key="i">
+                <div class="pdp-thumb" :class="activeImg === i ? 'active' : ''" @click="activeImg = i">
+                  <img :src="src" :alt="d.product.name + ' view ' + (i + 1)" loading="lazy" />
+                </div>
+              </template>
+            </div>
           </div>
-          <select class="filter-select" x-model="sort" aria-label="Sort products">
-            <option value="featured">Featured</option>
-            <option value="price-asc">Price: Low to High</option>
-            <option value="price-desc">Price: High to Low</option>
-            <option value="rating">Top Rated</option>
-          </select>
+        </div>
+
+        <!-- Info -->
+        <div class="col-lg-6">
+          <div class="reveal reveal-d1">
+            <div class="pdp-cat" x-text="SF.catName(d.product.cat)"></div>
+            <h1 class="pdp-title" x-text="d.product.name"></h1>
+
+            <div class="pdp-rating-row">
+              <span class="stars">
+                <template x-for="i in Math.round(d.product.rating)" :key="i">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </template>
+              </span>
+              <strong x-text="d.product.rating"></strong>
+              <span class="rcount" x-text="'(' + d.product.reviews + ' reviews)'"></span>
+            </div>
+
+            <div class="pdp-price-row">
+              <span class="pdp-price" x-text="SF.money(d.product.price)"></span>
+              <span class="pdp-was" x-show="d.product.was" x-text="d.product.was ? SF.money(d.product.was) : ''"></span>
+              <span class="pdp-save" x-show="d.product.was" x-text="d.product.was ? 'Save ' + SF.money(d.product.was - d.product.price) : ''"></span>
+            </div>
+
+            <p class="pdp-desc" x-text="d.description"></p>
+
+            <!-- Actions -->
+            <div class="pdp-actions">
+              <div class="pdp-qty">
+                <button @click="qty = Math.max(1, qty - 1)" aria-label="Decrease quantity">−</button>
+                <span x-text="qty"></span>
+                <button @click="qty = qty + 1" aria-label="Increase quantity">+</button>
+              </div>
+              <button class="btn-luxe btn-brass pdp-add-btn" @click="$store.shop.addToCart(d.product.id, qty)">
+                Add to Cart
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+              </button>
+              <button class="pdp-wish-btn" :class="$store.shop.inWishlist(d.product.id) ? 'active' : ''"
+                      :aria-label="'Wishlist ' + d.product.name" @click="$store.shop.toggleWishlist(d.product.id)">
+                <svg width="20" height="20" viewBox="0 0 24 24" :fill="$store.shop.inWishlist(d.product.id) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M19 14c1.5-1.5 3-3.3 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3.4 1-4.5 2.5C10.9 4 9.3 3 7.5 3A5.5 5.5 0 0 0 2 8.5c0 2.2 1.5 4 3 5.5l7 7Z"/></svg>
+              </button>
+            </div>
+
+            <!-- Trust badges -->
+            <div class="pdp-trust">
+              <div class="pdp-trust-item">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 17V5H1v12h13Zm0-8h4l3 4v4h-7"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg>
+                <strong>White-Glove Delivery</strong>
+                <span>Free, pan-India</span>
+              </div>
+              <div class="pdp-trust-item">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+                <strong>Lifetime Warranty</strong>
+                <span>On frames &amp; joinery</span>
+              </div>
+              <div class="pdp-trust-item">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+                <strong>30-Day Returns</strong>
+                <span>No questions asked</span>
+              </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="pdp-tabs">
+              <div class="pdp-tab-head">
+                <button class="pdp-tab-btn" :class="tab === 'desc' ? 'active' : ''" @click="tab = 'desc'">Description</button>
+                <button class="pdp-tab-btn" :class="tab === 'specs' ? 'active' : ''" @click="tab = 'specs'">Dimensions</button>
+                <button class="pdp-tab-btn" :class="tab === 'materials' ? 'active' : ''" @click="tab = 'materials'">Materials</button>
+                <button class="pdp-tab-btn" :class="tab === 'care' ? 'active' : ''" @click="tab = 'care'">Care &amp; Shipping</button>
+              </div>
+
+              <div class="pdp-tab-panel" :class="tab === 'desc' ? 'active' : ''">
+                <p class="mb-3" style="font-size:.95rem;line-height:1.7;color:rgba(34,26,18,.78);" x-text="d.description"></p>
+                <ul class="pdp-features-list">
+                  <template x-for="f in d.features" :key="f">
+                    <li>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                      <span x-text="f"></span>
+                    </li>
+                  </template>
+                </ul>
+              </div>
+
+              <div class="pdp-tab-panel" :class="tab === 'specs' ? 'active' : ''">
+                <div class="pdp-specs">
+                  <div class="pdp-spec-row"><span class="label">Width</span><span class="value" x-text="d.dims.w + ' cm'"></span></div>
+                  <div class="pdp-spec-row"><span class="label">Depth</span><span class="value" x-text="d.dims.d + ' cm'"></span></div>
+                  <div class="pdp-spec-row"><span class="label">Height</span><span class="value" x-text="d.dims.h + ' cm'"></span></div>
+                  <div class="pdp-spec-row" x-show="d.dims.seatH"><span class="label">Seat Height</span><span class="value" x-text="d.dims.seatH ? d.dims.seatH + ' cm' : '—'"></span></div>
+                  <div class="pdp-spec-row"><span class="label">Category</span><span class="value" x-text="SF.catName(d.product.cat)"></span></div>
+                  <div class="pdp-spec-row"><span class="label">Warranty</span><span class="value">Lifetime (frame)</span></div>
+                </div>
+              </div>
+
+              <div class="pdp-tab-panel" :class="tab === 'materials' ? 'active' : ''">
+                <ul class="pdp-materials-list">
+                  <template x-for="m in d.materials" :key="m">
+                    <li x-text="m"></li>
+                  </template>
+                </ul>
+              </div>
+
+              <div class="pdp-tab-panel" :class="tab === 'care' ? 'active' : ''">
+                <p class="mb-3" style="font-size:.92rem;line-height:1.7;color:rgba(34,26,18,.78);">
+                  <strong style="font-family:var(--font-display);display:block;margin-bottom:.4rem;">Care Guide</strong>
+                  <span x-text="d.care"></span>
+                </p>
+                <p style="font-size:.92rem;line-height:1.7;color:rgba(34,26,18,.78);">
+                  <strong style="font-family:var(--font-display);display:block;margin-bottom:.4rem;">Delivery &amp; Lead Time</strong>
+                  <span x-text="d.lead"></span>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <p class="mb-4" style="font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:rgba(34,26,18,.5);">
-        Showing <span x-text="items.length" style="color:var(--brass-deep)"></span> pieces
-      </p>
-
-      <div class="row row-cols-2 row-cols-md-3 row-cols-xl-4 g-3 g-lg-4">
-        <template x-for="p in items" :key="p.id">
-          <div class="col">
+  <!-- ============ RELATED PRODUCTS ============ -->
+  <section style="padding: var(--section-pad) 0 0;" x-data="{ get related() { const d = SF_DATA.getProductDetails(Number(new URLSearchParams(location.search).get('id')) || 1); return d ? d.related : []; } }">
+    <div class="container">
+      <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+        <div>
+          <span class="eyebrow reveal">Complete the Room</span>
+          <h2 class="section-title mb-0 reveal reveal-d1">You may also <em>like</em></h2>
+        </div>
+        <a href="products.html" class="btn-luxe btn-outline-ink reveal reveal-d2">
+          Shop All
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="row row-cols-2 row-cols-md-4 g-3 g-lg-4">
+        <template x-for="(p, i) in related" :key="p.id">
+          <div class="col reveal" :class="'reveal-d' + ((i % 4) + 1)">
             <article class="product-card">
               <div class="product-media">
                 <span class="product-tag" x-show="p.tag || p.isNew"
@@ -184,7 +296,6 @@
                   <div class="product-rating">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                     <span x-text="p.rating"></span>
-                    <span style="color:rgba(34,26,18,.45);font-weight:500" x-text="'(' + p.reviews + ')'"></span>
                   </div>
                 </div>
               </div>
@@ -192,25 +303,18 @@
           </div>
         </template>
       </div>
-
-      <div class="text-center py-5" x-show="!items.length" x-cloak>
-        <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="var(--brass-soft)" stroke-width="1.4" stroke-linecap="round" class="mb-3"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/><path d="M8 11h6"/></svg>
-        <h3 style="font-size:1.5rem;">Nothing matches that search</h3>
-        <p>Try a different name, or clear the filters to browse the full collection.</p>
-        <button class="btn-luxe btn-outline-ink" @click="cat = 'all'; q = ''">Clear Filters</button>
-      </div>
     </div>
   </section>
 
   <!-- ============ CUSTOM ORDER CTA ============ -->
-  <section class="container reveal" style="padding-top: 2rem;">
+  <section class="container reveal" style="padding-top: var(--section-pad);">
     <div class="cta-band">
       <div class="cta-bg">
         <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=1800&auto=format&fit=crop" alt="Custom-crafted Sampada interior" loading="lazy" />
       </div>
       <div class="cta-inner">
-        <h2>Can't find your piece?<br />We <em>build to order.</em></h2>
-        <p>Odd corner, unusual dimension, a design you sketched on a napkin — our workshop takes on bespoke commissions every month.</p>
+        <h2>Want this piece in a<br />different <em>dimension?</em></h2>
+        <p>We build to order. Send us your measurements, your fabric, or a sketch on a napkin — our workshop quotes bespoke commissions within a week.</p>
         <a href="contact.html" class="btn-luxe btn-brass">
           Request a Custom Build
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>

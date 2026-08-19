@@ -1,0 +1,19 @@
+Add product detail page (PDP) with gallery, tabs, related products
+
+- Create product.html with full PDP layout: sticky image gallery with
+  thumbnail switching, product info (price, rating, description), quantity
+  selector, add-to-cart, wishlist, trust badges, and tabbed details
+  (Description, Dimensions, Materials, Care & Shipping)
+- Add related products section and custom-order CTA
+- Enrich data.js with category-specific product metadata (materials,
+  features, dimensions, care guides, lead times) and gallery images
+- Add getProductDetails() and describeProduct() helpers to data.js
+- Add PDP CSS: gallery, thumbs, price row, tabs, specs, features, trust grid
+- Update product card links on index.html and products.html to point to
+  product.html?id=X instead of products.html or stub toast
+- PDP reads ?id=X from URL, falls back to product 1 on invalid id
+- Same chrome (nav, footer, drawers, toast) as all other pages
+
+Generated with [Devin](https://devin.ai)
+
+Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.com>

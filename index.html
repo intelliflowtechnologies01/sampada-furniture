@@ -294,14 +294,14 @@
                 <button class="wish-btn" :class="$store.shop.inWishlist(p.id) ? 'active' : ''" :aria-label="'Wishlist ' + p.name" @click="$store.shop.toggleWishlist(p.id)">
                   <svg width="16" height="16" viewBox="0 0 24 24" :fill="$store.shop.inWishlist(p.id) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M19 14c1.5-1.5 3-3.3 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3.4 1-4.5 2.5C10.9 4 9.3 3 7.5 3A5.5 5.5 0 0 0 2 8.5c0 2.2 1.5 4 3 5.5l7 7Z"/></svg>
                 </button>
-                <img :src="p.img" :alt="p.name" loading="lazy" />
+                <a :href="'product.html?id=' + p.id"><img :src="p.img" :alt="p.name" loading="lazy" /></a>
                 <div class="product-quickadd">
                   <button @click="$store.shop.addToCart(p.id)">Add to Cart</button>
                 </div>
               </div>
               <div class="product-info">
                 <div class="product-cat" x-text="SF.catName(p.cat)"></div>
-                <h3 class="product-name"><a href="products.html" x-text="p.name"></a></h3>
+                <h3 class="product-name"><a :href="'product.html?id=' + p.id" x-text="p.name"></a></h3>
                 <div class="product-meta">
                   <div class="product-price">
                     <span class="was" x-show="p.was" x-text="p.was ? SF.money(p.was) : ''"></span>
@@ -362,14 +362,14 @@
                 <button class="wish-btn" :class="$store.shop.inWishlist(p.id) ? 'active' : ''" :aria-label="'Wishlist ' + p.name" @click="$store.shop.toggleWishlist(p.id)">
                   <svg width="16" height="16" viewBox="0 0 24 24" :fill="$store.shop.inWishlist(p.id) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M19 14c1.5-1.5 3-3.3 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3.4 1-4.5 2.5C10.9 4 9.3 3 7.5 3A5.5 5.5 0 0 0 2 8.5c0 2.2 1.5 4 3 5.5l7 7Z"/></svg>
                 </button>
-                <img :src="p.img" :alt="p.name" loading="lazy" />
+                <a :href="'product.html?id=' + p.id"><img :src="p.img" :alt="p.name" loading="lazy" /></a>
                 <div class="product-quickadd">
                   <button @click="$store.shop.addToCart(p.id)">Add to Cart</button>
                 </div>
               </div>
               <div class="product-info">
                 <div class="product-cat" x-text="SF.catName(p.cat)"></div>
-                <h3 class="product-name"><a href="products.html" x-text="p.name"></a></h3>
+                <h3 class="product-name"><a :href="'product.html?id=' + p.id" x-text="p.name"></a></h3>
                 <div class="product-meta">
                   <div class="product-price">
                     <span class="was" x-show="p.was" x-text="p.was ? SF.money(p.was) : ''"></span>

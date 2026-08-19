@@ -60,5 +60,99 @@ const SF_DATA = {
     { slug: "lighting-layers", tag: "Styling", title: "Lighting in Layers, Not Levels", excerpt: "Ambient, task, accent — the three-layer formula our stylists use in every showroom vignette.", date: "Jul 18, 2026", read: "4 min", img: "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?q=80&w=1000&auto=format&fit=crop" },
     { slug: "behind-the-joinery", tag: "Craft", title: "Behind the Joinery: A Day in Our Workshop", excerpt: "Mortise, tenon, and 40 years of muscle memory — meet the hands behind Sampada's signature finish.", date: "Jul 9, 2026", read: "7 min", img: "https://images.unsplash.com/photo-1594620302200-9a762244a156?q=80&w=1000&auto=format&fit=crop" },
     { slug: "colour-story-terracotta", tag: "Trends", title: "Colour Story: The Return of Terracotta", excerpt: "Earth tones are having a renaissance. Here's how to bring warmth home without repainting a wall.", date: "Jun 30, 2026", read: "5 min", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=1000&auto=format&fit=crop" }
-  ]
+  ],
+
+  /* ---------- Category gallery shots (for PDP thumbnails) ---------- */
+  categoryShots: {
+    sofas:    ["photo-1567538096630-e0c55bd6374c", "photo-1583847268964-b28dc8f51f92", "photo-1616486338812-3dadae4b4ace"],
+    beds:     ["photo-1595526114035-0d45ed16cfbf", "photo-1616627561950-9f746e330187", "photo-1521587760476-6c12a4b040da"],
+    dining:   ["photo-1506439773649-6e0eb8cfb237", "photo-1503602642458-232111445657", "photo-1617806118233-18e1de247200"],
+    tables:   ["photo-1538688525198-9b88f6f53126", "photo-1493150134366-cacb0bdc03fe", "photo-1519710164239-da123dc03ef4"],
+    storage:  ["photo-1595428774223-ef52624120d2", "photo-1594620302200-9a762244a156", "photo-1616594039964-ae9021a400a0"],
+    lighting: ["photo-1513506003901-1e6abe22dee7", "photo-1556228453-efd6c1ff04f6", "photo-1507473885765-e6ed057f782c"]
+  },
+
+  /* ---------- Category-specific detail templates ---------- */
+  productMeta: {
+    sofas: {
+      materials: ["Solid teak frame", "High-density HR foam", "Italian bouclé upholstery", "Brass-tapered legs"],
+      features: ["Removable, dry-clean covers", "No-sag hand-tied springs", "Lifetime frame warranty", "11-day build cycle"],
+      dims: { w: 220, d: 92, h: 78, seatH: 44 },
+      care: "Vacuum weekly on low. Spot-clean spills immediately with a damp cloth — no solvents. Professional dry-clean recommended annually.",
+      lead: "Ships in 3–4 weeks. White-glove delivery and assembly included, pan-India."
+    },
+    beds: {
+      materials: ["Solid walnut frame", "Hand-rubbed natural oil finish", "Slatted teak base", "Brushed brass inlays"],
+      features: ["No box spring needed", "Reinforced centre rail", "Quiet mortise joinery", "Lifetime frame warranty"],
+      dims: { w: 180, d: 210, h: 110, seatH: 40 },
+      care: "Wipe with a soft, dry cloth. Re-oil every 12–18 months with food-grade walnut oil. Avoid direct sunlight to preserve the finish.",
+      lead: "Ships in 4–5 weeks. White-glove delivery, assembly and placement included, pan-India."
+    },
+    dining: {
+      materials: ["Solid oak top", "Hand-french-polished surface", "Tapered solid wood legs", "Natural wax finish"],
+      features: ["Seats 6–8 comfortably", "Extends with hidden leaf", "Scratch-resistant top", "Lifetime frame warranty"],
+      dims: { w: 220, d: 100, h: 75, seatH: 45 },
+      care: "Wipe spills immediately. Use coasters and trivens for hot dishes. Re-wax annually with natural beeswax. Avoid abrasive cleaners.",
+      lead: "Ships in 3–4 weeks. White-glove delivery and assembly included, pan-India."
+    },
+    tables: {
+      materials: ["Solid walnut or oak", "Hand-rubbed oil finish", "Dovetailed drawer joints", "Brass cup pulls"],
+      features: ["Cable management channel", "Hidden storage drawer", "Leveling brass feet", "Lifetime frame warranty"],
+      dims: { w: 120, d: 60, h: 75, seatH: 74 },
+      care: "Dust with a soft cloth. Re-oil annually. Keep away from radiators and AC vents to prevent seasonal movement.",
+      lead: "Ships in 2–3 weeks. White-glove delivery and assembly included, pan-India."
+    },
+    storage: {
+      materials: ["Solid teak carcase", "Adjustable shelves", "Soft-close brass hinges", "Hand-rubbed oil finish"],
+      features: ["Adjustable shelf heights", "Anti-tip wall anchor", "Ventilated back panel", "Lifetime frame warranty"],
+      dims: { w: 90, d: 38, h: 180, seatH: null },
+      care: "Dust with a soft cloth. Avoid overloading shelves. Re-oil annually with natural teak oil to maintain the grain.",
+      lead: "Ships in 3–4 weeks. White-glove delivery and wall-anchoring included, pan-India."
+    },
+    lighting: {
+      materials: ["Hand-spun brass shade", "Solid marble base", "Linen-wrapped cord", "Dimmable LED bulb included"],
+      features: ["Touch-dimmer switch", "3 colour temperatures", "5-year electrical warranty", "Energy-efficient LED"],
+      dims: { w: 40, d: 40, h: 165, seatH: null },
+      care: "Dust with a dry microfibre cloth. Clean brass with a gentle brass polish every 6 months. Replace bulb with E27 LED only.",
+      lead: "Ships in 1–2 weeks. White-glove delivery and installation included, pan-India."
+    }
+  }
+};
+
+/* ---------- PDP helper: build a full detail object for a product ---------- */
+SF_DATA.getProductDetails = function (id) {
+  const p = this.products.find(x => x.id === Number(id));
+  if (!p) return null;
+  const meta = this.productMeta[p.cat] || this.productMeta.tables;
+  const shots = this.categoryShots[p.cat] || this.categoryShots.tables;
+  // Gallery: main product image first, then 3 category detail shots
+  const mainId = p.img.match(/photo-[\w-]+/);
+  const gallery = [
+    p.img,
+    ...shots.filter(s => !(mainId && s === mainId[0])).slice(0, 3)
+  ].map(src => {
+    // normalise to a consistent width for gallery use
+    const photoId = src.match(/photo-[\w-]+/);
+    return photoId
+      ? `https://images.unsplash.com/${photoId[0]}?q=80&w=1000&auto=format&fit=crop`
+      : src;
+  });
+  return {
+    product: p,
+    gallery,
+    materials: meta.materials,
+    features: meta.features,
+    dims: meta.dims,
+    care: meta.care,
+    lead: meta.lead,
+    description: this.describeProduct(p),
+    related: this.products.filter(x => x.cat === p.cat && x.id !== p.id).slice(0, 4)
+  };
+};
+
+SF_DATA.describeProduct = function (p) {
+  const cat = SF.catName(p.cat);
+  const wood = p.cat === "lighting" ? "brass and marble" : p.cat === "sofas" ? "solid teak" : "solid walnut and oak";
+  const lead = p.cat === "lighting" ? "Hand-spun and hand-finished" : "Hand-joined and hand-finished";
+  return `${p.name} is a ${cat.toLowerCase()} piece from the Sampada workshop, built from ${wood} by master artisans with ${p.reviews} verified reviews and a ${p.rating}-star rating. ${lead} in our Pune workshop over ${p.cat === "sofas" ? "eleven days" : "several weeks"}, it carries our lifetime frame warranty and ships with complimentary white-glove delivery across India. Every joint is cut by hand, every surface hand-rubbed with natural oil — the kind of piece that settles into a room and stays for decades.`;
 };
